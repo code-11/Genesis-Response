@@ -4,10 +4,10 @@
 int main(){
 	static const int size=10;
 
-	terrainGenerator* testGenerator= new terrainGenerator();
-	testGenerator->generate(map);
+	terrainGenerator* testGenerator= new terrainGenerator(size,size);
+	testGenerator->cornerGen();
+	testGenerator->exportMap("testFileIO.txt");
 	delete testGenerator;
-	delete map;
 	return 1;
 
 }

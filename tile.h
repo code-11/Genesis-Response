@@ -11,6 +11,20 @@ protected:
 
 	int alignment;
 public:
+	tile(){
+		height=1;
+	}
+	tile(int Height){
+		height=Height;
+	}
+	tile(int Height,int Water,int Heat,int Veg, int Fauna, int Alignment){
+		height=Height;
+		water=Water;
+		heat=Heat;
+		vegetation=Veg;
+		fauna=Fauna;
+		alignment=Alignment;
+	}
 	int getHeight(){
 		return height;
 	}
