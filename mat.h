@@ -37,7 +37,8 @@ public:
 
 	}
 	void exportMap(const std::string filePath){
-		std::ofstream outFile (filePath, std::ios::app);
+		std::ofstream outFile (filePath, std::ios::out);
+		outFile<<"XDimension,"<<sizeX<<",YDimension,"<<sizeY<<"\n";
 		outFile<<"x,y,height,water,heat,vegetation,fauna,alignment\n";
 		for (index y=0; y<sizeY;++y){
 			for (index x=0; x<sizeY; ++x){
