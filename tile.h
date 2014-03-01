@@ -1,15 +1,15 @@
 class tile{
 protected:
-	int height;
+	int height; 	//The height of the biome from 0 to 100
 
-	int water;
-	int heat;
+	int water; 		//The water level of the biomes from 0 to 100
+	int heat; 		//The heat level of the biome from -100 to 100
 
-	int vegetation;
-	int fauna;
+	int vegetation; //0 to 100
+	int fauna; 		//0 to 100
 
 
-	int alignment;
+	int alignment;	//-100 to 100
 public:
 	tile(){
 		height=1;

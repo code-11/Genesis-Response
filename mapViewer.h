@@ -7,6 +7,7 @@
 #include "tile.h"
 #include "boost/multi_array.hpp"
 #include <boost/algorithm/string.hpp>
+#include "colorHelper.h"
 
 /* Window resolution */
 #define WINDOW_WIDTH 320
@@ -24,6 +25,7 @@ private:
 	int sizeX;
 	int sizeY;
 public:
+
 	void setX(int newX){
 		sizeX=newX;
 	}
@@ -51,9 +53,14 @@ public:
 
 	void displayTiles(SDL_Surface* screen){
 		//std::cout<<"xdim:"<<map.shape()[0]<<" ydim:"<<map.shape()[1];
+		int col=0;
 		for (matrix::index y=0; y<map.shape()[1];y++){
 			for (matrix::index x=0;x<map.shape()[0];x++){
-				fillRect(screen,x*15,y*15,14,14,SDL_MapRGB(screen->format, 0, 255, 0));	
+				col=map[x][y].getWater();
+				rgbColor wCol=rgbColor();
+				wCol.setViaStr(col);
+				// std::cout<<"r:"<<wCol.getR()<<" g:"<<wCol.getG()<<" b:"<<wCol.getB()<<"\n";
+				fillRect(screen,x*15,y*15,14,14,SDL_MapRGB(screen->format, wCol.getR(), wCol.getG(), wCol.getB()));	
 			}
 		}
 	}

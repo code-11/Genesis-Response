@@ -30,10 +30,10 @@ public:
     void cornerGen(){
 		for (index y=0; y<sizeY; ++y){
 			for (index x=0; x<sizeX; ++x){
-				map[x][y]=tile(1,1,1,1,1,1);
+				map[x][y]=tile(1,50,1,1,1,1);
 			}
 		}
-		std::cout<<map[5][5].getHeight();
+		//std::cout<<map[5][5].getHeight();
 
 	}
 	void exportMap(const std::string filePath){
