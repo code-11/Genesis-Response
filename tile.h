@@ -1,9 +1,9 @@
 class tile{
 protected:
-	int height; 	//The height of the biome from 0 to 100
+	int height; 	//The height of the biome from -100 to 100
 
 	int water; 		//The water level of the biomes from 0 to 100
-	int heat; 		//The heat level of the biome from -100 to 100
+	int heat; 		//The heat level of the biome from 0 to 100
 
 	int vegetation; //0 to 100
 	int fauna; 		//0 to 100

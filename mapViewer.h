@@ -7,14 +7,10 @@
 #include "tile.h"
 #include "boost/multi_array.hpp"
 #include <boost/algorithm/string.hpp>
-#include "colorHelper.h"
 
-/* Window resolution */
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 240
+#include "drawHelper.h"
 
-/* Window title */
-#define WINDOW_TITLE "SDL2 Test"
+
 
 /* The window */
 typedef boost::multi_array<tile,2> matrix;
@@ -32,35 +28,22 @@ public:
 	void setY(int newY){
 		sizeY=newY;
 	}
-	void fillRect(SDL_Surface* dst,int x, int y, int w ,int h, Uint32 color){
-		SDL_Rect tempRect;
-		tempRect.x = x;
-		tempRect.y = y;
-		tempRect.w = w;
-		tempRect.h = h;
-		SDL_FillRect(dst,&tempRect,color);
-	}
 
-	SDL_Window* makeWindow(){
-		return SDL_CreateWindow(
-			   WINDOW_TITLE,
-			   SDL_WINDOWPOS_CENTERED,
-			   SDL_WINDOWPOS_CENTERED,
-			   WINDOW_WIDTH,
-			   WINDOW_HEIGHT,
-			   SDL_WINDOW_SHOWN);
-	}
-
-	void displayTiles(SDL_Surface* screen){
-		//std::cout<<"xdim:"<<map.shape()[0]<<" ydim:"<<map.shape()[1];
-		int col=0;
+	void renderLines(SDL_Renderer* renderer){
+		int col=0; 
+		int tileWidth=50;
+		int tileHeight=50;
 		for (matrix::index y=0; y<map.shape()[1];y++){
 			for (matrix::index x=0;x<map.shape()[0];x++){
-				col=map[x][y].getWater();
+				col=map[x][y].getHeat();
+				int height=map[x][y].getHeight();
+				int weightedHeight=(height*(tileHeight/3))/100;
 				rgbColor wCol=rgbColor();
 				wCol.setViaStr(col);
-				// std::cout<<"r:"<<wCol.getR()<<" g:"<<wCol.getG()<<" b:"<<wCol.getB()<<"\n";
-				fillRect(screen,x*15,y*15,14,14,SDL_MapRGB(screen->format, wCol.getR(), wCol.getG(), wCol.getB()));	
+				rgbColor lineCol=rgbColor();
+				lineCol.setAll(0,0,0);
+				drawRect(renderer,x*tileWidth,y*tileHeight,tileWidth-1,tileHeight-1,wCol);
+				drawChev(renderer,x*tileWidth+2,(x*tileWidth)+tileWidth-4,(y*tileHeight)+(tileHeight/2),weightedHeight,lineCol,3);
 			}
 		}
 	}
@@ -71,13 +54,17 @@ public:
 		SDL_Event event;   /* The event structure */
 		_Bool running = true;  /* The game loop flag */
 		SDL_Surface* image = NULL; /* to put the loaded image */
+		SDL_Renderer* renderer;
 		if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
 			printf( "SDL2 could not initialize! SDL2_Error: %s\n", SDL_GetError() );
 		}else{
 
 			window = makeWindow();
-			screen = SDL_GetWindowSurface( window );
-			displayTiles(screen);
+			// screen = SDL_GetWindowSurface( window );
+			renderer = SDL_CreateRenderer(window, -1, 0);
+			//displayTiles(screen);
+			renderLines(renderer);
+			SDL_RenderPresent(renderer);
 			while( running )
 			{
 			  while( SDL_PollEvent( &event ) != 0 )
@@ -87,8 +74,9 @@ public:
 			        running = false;
 			     }
 			  }
-			  SDL_UpdateWindowSurface( window );
+			  // SDL_UpdateWindowSurface( window );
 			}
+			// SDL_Delay(4000);
 		}
 		 SDL_DestroyWindow( window );
 		 SDL_Quit();

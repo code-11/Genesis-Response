@@ -1,5 +1,9 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <vector>
+
+
+
 void drawLine(SDL_Renderer* renderer,int x1, int y1, int x2, int y2, int r, int g, int b,int thick){
         SDL_SetRenderDrawColor(renderer, r, g, b, 255);
         SDL_RenderDrawLine(renderer,x1,y1,x2,y2);
@@ -7,7 +11,7 @@ void drawLine(SDL_Renderer* renderer,int x1, int y1, int x2, int y2, int r, int 
         int diffY =y2-y1;
         if (diffX==0){diffX=1;}
         int slope = diffY/diffX;
-        std::cout<<slope;
+        //std::cout<<slope;
 
         if (slope>1){ 
                 if (thick>1)

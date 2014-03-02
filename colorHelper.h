@@ -33,11 +33,13 @@ private:
 	int r;
 	int g;
 	int b;
+	int a;
 public:
 	rgbColor(){
 		r=0;
 		g=0;
 		b=0;
+		a=255;
 	}
 	// rgbColor(int newR,int newG,int newB){
 	// 	r=newR;
@@ -53,6 +55,9 @@ public:
 	int getB(){
 		return b;
 	}
+	int getA(){
+		return a;
+	}
 	void setR(int newR){
 		r=newR;
 	}
@@ -61,6 +66,9 @@ public:
 	}
 	void setB(int newB){
 		b=newB;
+	}
+	void setA(int newA){
+		a=newA;
 	}
 	void setAll (int newR,int newG,int newB){
 		r=newR;
