@@ -7,7 +7,7 @@
 #include "tile.h"
 #include "boost/multi_array.hpp"
 #include <boost/algorithm/string.hpp>
-
+#include <cmath>
 #include "drawHelper.h"
 
 
@@ -38,14 +38,38 @@ public:
 				col=map[x][y].getHeat();
 				int height=map[x][y].getHeight();
 				int weightedHeight=(height*(tileHeight/3))/100;
+
+				int align=map[x][y].getAlign();
+
 				rgbColor wCol=rgbColor();
 				wCol.setViaStr(col);
+
 				rgbColor lineCol=rgbColor();
 				lineCol.setAll(0,0,0);
-				drawRect(renderer,x*tileWidth,y*tileHeight,tileWidth-1,tileHeight-1,wCol);
-				drawChev(renderer,x*tileWidth+2,(x*tileWidth)+tileWidth-4,(y*tileHeight)+(tileHeight/2),weightedHeight,lineCol,3);
+
+				rgbColor waterCol=rgbColor();
+				waterCol.setAll(0,0,255);
+				waterCol.setA((map[x][y].getWater()*255)/100);
+
+				rgbColor alignCol=rgbColor();
+				int rgbVal=((align+100)*255)/200;
+				alignCol.setAll(rgbVal,rgbVal,rgbVal);
+				alignCol.setA((std::abs(align)*255)/100);
+
+				int curW=x*tileWidth;
+				int curH=y*tileHeight;
+
+				drawRect(renderer,curW,curH,tileWidth-1,tileHeight-1,wCol);
+				drawChev(renderer,curW+2,(curW)+tileWidth-4,(curH)+(tileHeight/2),weightedHeight,lineCol,3);
+				if (align<0){
+					drawSkull(renderer,curW+(tileWidth/2)-4,curH+(tileHeight/2),.5,alignCol);				
+				}else{
+					drawHalo(renderer,curW+(tileWidth/2)-4,curH+(tileHeight/2),.5,alignCol);				
+				}
+				drawRect(renderer,curW+(tileWidth/8)+5,curH+(tileHeight/2)+2,(3*tileWidth/4)-10,tileHeight/16,waterCol);
 			}
-		}
+		}		
+
 	}
 
 	void runDisplay(){

@@ -30,7 +30,7 @@ public:
     void cornerGen(){
 		for (index y=0; y<sizeY; ++y){
 			for (index x=0; x<sizeX; ++x){
-				map[x][y]=tile(-100,1,50,1,1,1);
+				map[x][y]=tile(-100,80,50,1,1,-100);
 			}
 		}
 		//std::cout<<map[5][5].getHeight();

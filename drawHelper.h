@@ -29,6 +29,7 @@ void fillRect(SDL_Surface* dst,int x, int y, int w ,int h, Uint32 color){
         SDL_FillRect(dst,&tempRect,color);
 }
 void drawRect(SDL_Renderer* renderer,int x,int y, int w, int h,rgbColor col){
+    SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderer, col.getR(), col.getG(), col.getB(), col.getA());
     SDL_Rect tempRect;
     tempRect.x = x;
@@ -38,7 +39,18 @@ void drawRect(SDL_Renderer* renderer,int x,int y, int w, int h,rgbColor col){
     SDL_RenderFillRect(renderer,&tempRect);
 }
 
+void drawHollowRect(SDL_Renderer* renderer,int x,int y, int w, int h,rgbColor col){
+    SDL_SetRenderDrawColor(renderer, col.getR(), col.getG(), col.getB(), col.getA());
+    SDL_Rect tempRect;
+    tempRect.x = x;
+    tempRect.y = y;
+    tempRect.w = w;
+    tempRect.h = h;
+    SDL_RenderDrawRect(renderer,&tempRect);
+}
+
 void drawLine(SDL_Renderer* renderer,int x1, int y1, int x2, int y2, rgbColor c,int thick){
+        SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
         SDL_SetRenderDrawColor(renderer, c.getR(), c.getG(), c.getB(), c.getA());
         SDL_RenderDrawLine(renderer,x1,y1,x2,y2);
         int diffX =x2-x1;
@@ -126,4 +138,80 @@ void drawChev(SDL_Renderer* renderer, int x1,int x2,int y, int height,rgbColor c
     drawLine(renderer,x1,y,halfX,y-height,col,thick);
     drawLine(renderer,halfX,y-height,x2,y,col,thick);
 
+}
+void drawSkull(SDL_Renderer* renderer,int x1,int y1, float size,rgbColor col){
+    
+    //Bottom of Jaw
+    drawLine(renderer,x1,y1,x1+int(10*size),y1,col,1);
+    
+    //Right Cheek
+    drawLine(renderer,x1+int(10*size),y1,x1+int(12*size),y1-int(3*size),col,1);
+    drawLine(renderer,x1+int(12*size),y1-int(3*size),x1+int(12*size),y1-int(8*size),col,1);
+    drawLine(renderer,x1+int(12*size),y1-int(8*size),x1+int(13*size),y1-int(8*size),col,1);
+    drawLine(renderer,x1+int(13*size),y1-int(8*size),x1+int(16*size),y1-int(15*size),col,1);
+    drawLine(renderer,x1+int(16*size),y1-int(15*size),x1+int(16*size),y1-int(22*size),col,1);
+    drawLine(renderer,x1+int(16*size),y1-int(22*size),x1+int(14*size),y1-int(27*size),col,1);
+    
+    //Top of the Head
+    drawLine(renderer,x1+int(14*size),y1-int(27*size),x1+int(10*size),y1-int(29*size),col,1);
+    drawLine(renderer,x1+int(10*size),y1-int(29*size),x1,y1-int(29*size),col,1);
+    drawLine(renderer,x1,y1-int(29*size),x1-int(4*size),y1-int(27*size),col,1);
+
+    //Left Cheek
+    drawLine(renderer,x1,y1,x1-int(2*size),y1-int(3*size),col,1);
+    drawLine(renderer,x1-int(2*size),y1-int(3*size),x1-int(2*size),y1-int(8*size),col,1);
+    drawLine(renderer,x1-int(2*size),y1-int(8*size),x1-int(3*size),y1-int(8*size),col,1);
+    drawLine(renderer,x1-int(3*size),y1-int(8*size),x1-int(6*size),y1-int(15*size),col,1);
+    drawLine(renderer,x1-int(6*size),y1-int(15*size),x1-int(6*size),y1-int(22*size),col,1);
+    drawLine(renderer,x1-int(6*size),y1-int(22*size),x1-int(4*size),y1-int(27*size),col,1);
+
+    //Eyes
+    drawHollowRect(renderer,x1-int(1*size),y1-int(22*size),int(5*size),int(5*size),col);
+    drawHollowRect(renderer,x1+int(8*size),y1-int(22*size),int(5*size),int(5*size),col);
+
+    //Mouth
+    drawLine(renderer,x1+int(1*size),y1-int(6*size),x1+int(1*size),y1-int(2*size),col,1);
+    drawLine(renderer,x1+int(4*size),y1-int(6*size),x1+int(4*size),y1-int(2*size),col,1);
+    drawLine(renderer,x1+int(6*size),y1-int(6*size),x1+int(6*size),y1-int(2*size),col,1);
+    drawLine(renderer,x1+int(9*size),y1-int(6*size),x1+int(9*size),y1-int(2*size),col,1);
+
+    //Nose
+    drawLine(renderer,x1+int(3*size),y1-int(10*size),x1+int(7*size),y1-int(10*size),col,1);
+    drawLine(renderer,x1+int(3*size),y1-int(10*size),x1+int(5*size),y1-int(13*size),col,1);
+    drawLine(renderer,x1+int(7*size),y1-int(10*size),x1+int(5*size),y1-int(13*size),col,1);
+
+    //Crosses
+    drawLine(renderer,x1-int(11*size),y1,x1+int(17*size),y1+int(14*size),col,int(size*2));
+    drawLine(renderer,x1+int(21*size),y1,x1-int(7*size),y1+int(14*size),col,int(size*2));
+}
+void drawHalo(SDL_Renderer* renderer,int x1,int y1, float size,rgbColor col){
+    //Bottom of Jaw
+    drawLine(renderer,x1,y1,x1+int(10*size),y1,col,1);
+    
+    //Right Cheek
+    drawLine(renderer,x1+int(10*size),y1,x1+int(12*size),y1-int(3*size),col,1);
+    drawLine(renderer,x1+int(12*size),y1-int(3*size),x1+int(12*size),y1-int(8*size),col,1);
+    drawLine(renderer,x1+int(12*size),y1-int(8*size),x1+int(13*size),y1-int(8*size),col,1);
+    drawLine(renderer,x1+int(13*size),y1-int(8*size),x1+int(16*size),y1-int(15*size),col,1);
+    drawLine(renderer,x1+int(16*size),y1-int(15*size),x1+int(16*size),y1-int(22*size),col,1);
+    drawLine(renderer,x1+int(16*size),y1-int(22*size),x1+int(14*size),y1-int(27*size),col,1);
+    
+    //Top of the Head
+    drawLine(renderer,x1+int(14*size),y1-int(27*size),x1+int(10*size),y1-int(29*size),col,1);
+    drawLine(renderer,x1+int(10*size),y1-int(29*size),x1,y1-int(29*size),col,1);
+    drawLine(renderer,x1,y1-int(29*size),x1-int(4*size),y1-int(27*size),col,1);
+
+    //Left Cheek
+    drawLine(renderer,x1,y1,x1-int(2*size),y1-int(3*size),col,1);
+    drawLine(renderer,x1-int(2*size),y1-int(3*size),x1-int(2*size),y1-int(8*size),col,1);
+    drawLine(renderer,x1-int(2*size),y1-int(8*size),x1-int(3*size),y1-int(8*size),col,1);
+    drawLine(renderer,x1-int(3*size),y1-int(8*size),x1-int(6*size),y1-int(15*size),col,1);
+    drawLine(renderer,x1-int(6*size),y1-int(15*size),x1-int(6*size),y1-int(22*size),col,1);
+    drawLine(renderer,x1-int(6*size),y1-int(22*size),x1-int(4*size),y1-int(27*size),col,1);
+
+    //Eyes
+    drawHollowRect(renderer,x1-int(1*size),y1-int(22*size),int(5*size),int(5*size),col);
+    drawHollowRect(renderer,x1+int(8*size),y1-int(22*size),int(5*size),int(5*size),col);
+
+    drawHollowRect(renderer,x1-int(7*size),y1-int(38*size),int(24*size),int(5*size),col);
 }
