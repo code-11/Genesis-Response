@@ -31,8 +31,8 @@ public:
 
 	void renderLines(SDL_Renderer* renderer){
 		int col=0; 
-		int tileWidth=50;
-		int tileHeight=50;
+		int tileWidth=55;
+		int tileHeight=55;
 		for (matrix::index y=0; y<map.shape()[1];y++){
 			for (matrix::index x=0;x<map.shape()[0];x++){
 				col=map[x][y].getHeat();
@@ -46,6 +46,14 @@ public:
 
 				rgbColor lineCol=rgbColor();
 				lineCol.setAll(0,0,0);
+
+				rgbColor faunaCol=rgbColor();
+				faunaCol.setAll(0,0,0);
+				faunaCol.setA((map[x][y].getFauna()*255)/100);
+
+				rgbColor plantCol=rgbColor();
+				plantCol.setAll(0,0,0);
+				plantCol.setA((map[x][y].getVeg()*255)/100);
 
 				rgbColor waterCol=rgbColor();
 				waterCol.setAll(0,0,255);
@@ -67,8 +75,11 @@ public:
 					drawHalo(renderer,curW+(tileWidth/2)-4,curH+(tileHeight/2),.5,alignCol);				
 				}
 				drawRect(renderer,curW+(tileWidth/8)+5,curH+(tileHeight/2)+2,(3*tileWidth/4)-10,tileHeight/16,waterCol);
+				drawPlant(renderer,curW+(tileWidth/5),curH+((tileHeight*15)/16),.5,plantCol);
+				drawAntler(renderer,curW+((tileWidth*5)/6)-1,curH+((tileHeight*15)/16)+1,.5,faunaCol);
 			}
 		}		
+		
 
 	}
 

@@ -213,5 +213,82 @@ void drawHalo(SDL_Renderer* renderer,int x1,int y1, float size,rgbColor col){
     drawHollowRect(renderer,x1-int(1*size),y1-int(22*size),int(5*size),int(5*size),col);
     drawHollowRect(renderer,x1+int(8*size),y1-int(22*size),int(5*size),int(5*size),col);
 
+    //Halo
     drawHollowRect(renderer,x1-int(7*size),y1-int(38*size),int(24*size),int(5*size),col);
 }
+
+void drawPetalL(SDL_Renderer* renderer,int x, int y,float size, rgbColor col){
+    drawLine(renderer,x,y,x+int(5*size),y,col,1);
+    drawLine(renderer,x+int(5*size),y,x+int(10*size),y-int(3*size),col,1);
+    drawLine(renderer,x+int(10*size),y-int(3*size),x+int(12*size),y-int(9*size),col,1);
+
+    drawLine(renderer,x,y,x+int(2*size),y-int(6*size),col,1);
+    drawLine(renderer,x+int(2*size),y-int(6*size),x+int(7*size),y-int(9*size),col,1);
+    drawLine(renderer,x+int(7*size),y-int(9*size),x+int(12*size),y-int(9*size),col,1);
+}
+void drawPetalR(SDL_Renderer* renderer,int x, int y,float size, rgbColor col){
+    drawLine(renderer,x,y,x-int(5*size),y,col,1);
+    drawLine(renderer,x-int(5*size),y,x-int(10*size),y-int(3*size),col,1);
+    drawLine(renderer,x-int(10*size),y-int(3*size),x-int(12*size),y-int(9*size),col,1);
+
+    drawLine(renderer,x,y,x-int(2*size),y-int(6*size),col,1);
+    drawLine(renderer,x-int(2*size),y-int(6*size),x-int(7*size),y-int(9*size),col,1);
+    drawLine(renderer,x-int(7*size),y-int(9*size),x-int(12*size),y-int(9*size),col,1);
+}
+void drawPetalU(SDL_Renderer* renderer,int x, int y,float size, rgbColor col){
+    drawLine(renderer,x,y,x+int(4*size),y-int(5*size),col,1);
+    drawLine(renderer,x+int(4*size),y-int(5*size),x,y-int(10*size),col,1);
+    drawLine(renderer,x,y,x-int(4*size),y-int(5*size),col,1);
+    drawLine(renderer,x-int(4*size),y-int(5*size),x,y-int(10*size),col,1);
+}
+void drawWheat(SDL_Renderer* renderer, int x, int y,float size,rgbColor col){
+    drawPetalL(renderer,x,y,size,col);
+    drawPetalL(renderer,x,y-7,size,col);
+    //drawPetalL(renderer,x,y-14,size,col);
+
+    drawPetalR(renderer,x-2,y,size,col);
+    drawPetalR(renderer,x-2,y-7,size,col);
+    //drawPetalR(renderer,x-2,y-14,size,col);
+    drawLine(renderer,x-1,y,x-1,y-15,col,2);
+}
+void drawPlant(SDL_Renderer* renderer, int x, int y,float size,rgbColor col){
+    drawPetalL(renderer,x,y,size,col);
+    drawPetalR(renderer,x-2,y,size,col);
+    drawPetalU(renderer,x-1,y,size,col);
+}
+void drawAntler(SDL_Renderer* renderer,int x, int y, float size, rgbColor col){
+    //Chin
+    drawLine(renderer,x,y,x+int(5*size),y,col,1);
+    
+    //Right Face
+    drawLine(renderer,x+int(5*size),y,x+int(9*size),y-int(9*size),col,1);
+    drawLine(renderer,x+int(9*size),y-int(9*size),x+int(9*size),y-int(14*size),col,1);
+    drawLine(renderer,x+int(9*size),y-int(14*size),x+int(7*size),y-int(16*size),col,1);
+
+    //Left Face
+    drawLine(renderer,x,y,x-int(4*size),y-int(9*size),col,1);
+    drawLine(renderer,x-int(4*size),y-int(9*size),x-int(4*size),y-int(14*size),col,1);
+    drawLine(renderer,x-int(4*size),y-int(14*size),x-int(2*size),y-int(16*size),col,1);
+
+    //Top of Face
+    drawLine(renderer,x-int(2*size),y-int(16*size),x+int(7*size),y-int(16*size),col,1);
+
+    //Left Antler
+    drawLine(renderer,x-int(3*size),y-int(15*size),x-int(12*size),y-int(17*size),col,1);
+    drawLine(renderer,x-int(12*size),y-int(17*size),x-int(13*size),y-int(27*size),col,1);
+    drawLine(renderer,x-int(7*size),y-int(17*size),x-int(4*size),y-int(25*size),col,1);
+
+    //Right Antler
+    drawLine(renderer,x+int(8*size),y-int(15*size),x+int(17*size),y-int(17*size),col,1);
+    drawLine(renderer,x+int(17*size),y-int(17*size),x+int(17*size),y-int(27*size),col,1);
+    drawLine(renderer,x+int(12*size),y-int(17*size),x+int(9*size),y-int(25*size),col,1);
+}
+
+// void drawPetal(SDL_Renderer* renderer, int x, int y,float size, rgbColor col){
+//     drawLine(renderer,x,y,x+int(7*size),y,col,1);
+//     drawLine(renderer,x+int(7*size),y,x+int(12*size),y-int(7*size),col,1);
+
+//     drawLine(renderer,x,y,x+int(5*size),y-int(7*size),col,1);
+//     drawLine(renderer,x+int(5*size),y-int(7*size),x+int(12*size),y-int(7*size),col,1);
+//     //std::cout<<int(size*5)<<" "<<size*5<<" "<<int(.5*5)<<"\n";
+// }
