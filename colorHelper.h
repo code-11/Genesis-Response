@@ -1,11 +1,11 @@
 
 /*
 	r   g   b
-	0	0 	255
-	0	42	255
-	0 	85	255
-	0	128	255
-	0 	170 255
+*	0	0 	255
+*	0	42	255
+*	0 	85	255
+*	0	128	255
+*	0 	170 255
 	0 	213 255
 	0	255 255
 	0	255 213
@@ -77,55 +77,45 @@ public:
 	}
 	void setViaStr(int str)
 	{
-		if ((str>=0) && (str<4))
-			setAll(0,0,255);
-		else if ((str>=4) && (str<8))
-			setAll(0,42,255);
-		else if ((str>=8) && (str<12))
-			setAll(0,85,255);
-		else if ((str>=12) && (str<16))
-			setAll(0,128,255);
-		else if ((str>=16) && (str<20))
-			setAll(0,170,255);
-		else if ((str>=20) && (str<24))
+		if ((str>=0) && (str<5))
 			setAll(0,213,255);
-		else if ((str>=24) && (str<28))
+		else if ((str>=5) && (str<10))
 			setAll(0,255,255);
-		else if ((str>=28) && (str<32))
+		else if ((str>=10) && (str<15))
 			setAll(0,255,213);
-		else if ((str>=32) && (str<36))
+		else if ((str>=15) && (str<20))
 			setAll(0,255,170);
-		else if ((str>=36) && (str<40))
+		else if ((str>=20) && (str<25))
 			setAll(0,255,128);
-		else if ((str>=40) && (str<44))
+		else if ((str>=25) && (str<30))
 			setAll(0,255,85);
-		else if ((str>=44) && (str<48))
+		else if ((str>=30) && (str<35))
 			setAll(0,255, 4);
-		else if ((str>=48) && (str<52))
+		else if ((str>=35) && (str<40))
 			setAll(0,255,0);
-		else if ((str>=52) && (str<56))
+		else if ((str>=40) && (str<45))
 			setAll(43,255,0);
-		else if ((str>=56) && (str<60))
+		else if ((str>=45) && (str<50))
 			setAll(85,255,0);
-		else if ((str>=60) && (str<64))
+		else if ((str>=50) && (str<55))
 			setAll(128,255,0);
-		else if ((str>=64) && (str<68))
+		else if ((str>=55) && (str<60))
 			setAll(170,255,0);
-		else if ((str>=68) && (str<72))
+		else if ((str>=60) && (str<65))
 			setAll(212,255,0);
-		else if ((str>=72) && (str<76))
+		else if ((str>=65) && (str<70))
 			setAll(255,255,0);
-		else if ((str>=76) && (str<80))
+		else if ((str>=70) && (str<75))
 			setAll(255,213,0);
-		else if ((str>=80) && (str<84))
+		else if ((str>=75) && (str<80))
 			setAll(255,170,0);
-		else if ((str>=84) && (str<88))
+		else if ((str>=80) && (str<85))
 			setAll(255,128,0);
-		else if ((str>=88) && (str<92))
+		else if ((str>=85) && (str<90))
 			setAll(255,85,0);
-		else if ((str>=92) && (str<96))
+		else if ((str>=90) && (str<95))
 			setAll(255,42,0);
-		else if ((str>=96) && (str<=100))
+		else if ((str>=95) && (str<=100))
 			setAll(255,0,0);
 	}
 };

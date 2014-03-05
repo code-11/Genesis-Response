@@ -1,5 +1,5 @@
 #include "colorHelper.h"
-
+#include "tile.h"
 /* Window resolution */
 #define WINDOW_WIDTH 500
 #define WINDOW_HEIGHT 500
@@ -283,12 +283,46 @@ void drawAntler(SDL_Renderer* renderer,int x, int y, float size, rgbColor col){
     drawLine(renderer,x+int(17*size),y-int(17*size),x+int(17*size),y-int(27*size),col,1);
     drawLine(renderer,x+int(12*size),y-int(17*size),x+int(9*size),y-int(25*size),col,1);
 }
+void drawTile(SDL_Renderer* renderer,int x, int y,tile curTile,int tileWidth,int tileHeight)
+{
+    int col=curTile.getHeat();
+    int height=curTile.getHeight();
+    int weightedHeight=(height*(tileHeight/3))/100;
 
-// void drawPetal(SDL_Renderer* renderer, int x, int y,float size, rgbColor col){
-//     drawLine(renderer,x,y,x+int(7*size),y,col,1);
-//     drawLine(renderer,x+int(7*size),y,x+int(12*size),y-int(7*size),col,1);
+    int align=curTile.getAlign();
 
-//     drawLine(renderer,x,y,x+int(5*size),y-int(7*size),col,1);
-//     drawLine(renderer,x+int(5*size),y-int(7*size),x+int(12*size),y-int(7*size),col,1);
-//     //std::cout<<int(size*5)<<" "<<size*5<<" "<<int(.5*5)<<"\n";
-// }
+    rgbColor wCol=rgbColor();
+    wCol.setViaStr(col);
+
+    rgbColor lineCol=rgbColor();
+    lineCol.setAll(0,0,0);
+    //lineCol.setA((std::abs(height)*255)/100);
+
+    rgbColor faunaCol=rgbColor();
+    faunaCol.setAll(0,0,0);
+    faunaCol.setA((curTile.getFauna()*255)/100);
+
+    rgbColor plantCol=rgbColor();
+    plantCol.setAll(0,0,0);
+    plantCol.setA((curTile.getVeg()*255)/100);
+
+    rgbColor waterCol=rgbColor();
+    waterCol.setAll(0,0,255);
+    waterCol.setA((curTile.getWater()*255)/100);
+
+    rgbColor alignCol=rgbColor();
+    alignCol.setAll(0,0,0);
+    alignCol.setA((std::abs(align)*255)/100);
+
+    drawRect(renderer,x,y,tileWidth-1,tileHeight-1,wCol);
+    drawChev(renderer,x+2,(x)+tileWidth-4,(y)+(tileHeight/2),weightedHeight,lineCol,3);
+    drawRect(renderer,x+(tileWidth/8)+5,y+(tileHeight/2)+2,(3*tileWidth/4)-10,tileHeight/16,waterCol);
+
+    if (align<0){
+        drawSkull(renderer,x+(tileWidth/2)-4,y+(tileHeight/2),.5,alignCol);               
+    }else{
+        drawHalo(renderer,x+(tileWidth/2)-4,y+(tileHeight/2),.5,alignCol);                
+    }
+    drawPlant(renderer,x+(tileWidth/5),y+((tileHeight*15)/16),.5,plantCol);
+    drawAntler(renderer,x+((tileWidth*5)/6)-1,y+((tileHeight*15)/16)+1,.5,faunaCol);
+}

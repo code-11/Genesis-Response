@@ -32,6 +32,16 @@ public:
 			for (index x=0; x<sizeX; ++x){
 				if ((x==5) && (y==5))
 					map[x][y]=tile(0,0,0,1,1,0);
+				else if ((x==5) && (y==6))
+					map[x][y]=tile(100,0,0,0,0,-100);
+				else if ((x==6) && (y==5))
+					map[x][y]=tile(50,100,0,0,0,-100);
+				else if ((x==6) && (y==6))
+					map[x][y]=tile(0,50,100,0,0,-100);
+				else if ((x==4) && (y==5))
+					map[x][y]=tile(0,0,50,100,0,50);
+				else if ((x==5) && (y==4))
+					map[x][y]=tile(0,0,0,50,100,-50);
 				else
 					map[x][y]=tile(-100,80,50,1,1,-50);
 			}
