@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include "tile.h"
+#include <ctime>
 
 typedef boost::multi_array<tile,2> matrix;
 typedef matrix::index index;
@@ -15,10 +16,12 @@ protected:
 	int sizeX;
 	int sizeY;
 	matrix map;
+	long tiempo=std::time(0);
 	boost::random::mt19937 gen;
+
 public:
 	terrainGenerator (int newSizeX, int newSizeY){
-		
+		gen.seed(static_cast<unsigned int>(tiempo));
 		sizeX=newSizeX;
 		sizeY=newSizeY;
 		map.resize(boost::extents[newSizeX][newSizeY]); 
@@ -62,31 +65,34 @@ public:
 		}else if ((desY<0) || (desY>sizeY-1)){
 			return false;
 		}else{
-			if (map[desX][desY].getHeight()!=-101){
-				return true;
-			}
+			return map[desX][desY].getHeight()!=-101;
 		}
 	}
 	tile averageTile(index x,index y){
 		tile average=tile(0,0,0,0,0,0);
 		int many=0;
-		if (boundsCheck(x-1,y)){
+		if (boundsCheck(x-1,y)==true){
 			average.add(map[x-1][y]);
 			many+=1;
+			// std::cout<<"including left\n";
 		}
-		if (boundsCheck(x+1,y)){
+		if (boundsCheck(x+1,y)==true){
 			average.add(map[x+1][y]);
 			many+=1;
+			// std::cout<<"including right\n";
 		}
-		if (boundsCheck(x,y-1)){
+		if (boundsCheck(x,y-1)==true){
 			average.add(map[x][y-1]);
 			many+=1;
+			// std::cout<<"including up\n";
 		}
-		if (boundsCheck(x,y+1)){
+		if (boundsCheck(x,y+1)==true){
 			average.add(map[x][y+1]);
 			many+=1;
+			// std::cout<<"including down\n";
 		}
 		average.divide(many);
+		// std::cout<<"averaging "<<many<<" at"<<x<<","<<y<<"\n" ;
 		return average;
 
 
@@ -104,8 +110,9 @@ public:
 				map[x][y]=tile(-101,0,0,0,0,0);
 			}
 		}
-		for (index y=0; y<sizeY; ++y){
-			for (index x=0; x<sizeX; ++x){
+		// index y=0;
+		for (index x=0; x<sizeX; x+=1){
+			for (index y=0; y<sizeY; y+=1){
 				if ((x==0) && (y==0)){
 					map[x][y]=randomTile();
 				}else{
