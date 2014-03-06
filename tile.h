@@ -41,6 +41,38 @@ public:
 		fauna+=that.getFauna();
 		alignment+=that.getAlign();
 	}
+	void check(){
+		if (height<-100){
+			height=-100;
+		}else if (height>100){
+			height=100;
+		}
+		if (water<0){
+			water=0;
+		}else if (water>100){
+			water=100;
+		}
+		if (heat<0){
+			heat=0;
+		}else if (heat>100){
+			heat=100;
+		}
+		if (vegetation<0){
+			vegetation=0;
+		}else if (vegetation>100){
+			vegetation=100;
+		}
+		if (fauna<0){
+			fauna=0;
+		}else if (fauna>100){
+			fauna=100;
+		}
+		if (alignment<-100){
+			alignment=-100;
+		}else if (alignment>100){
+			alignment=100;
+		}
+	}
 	int getHeight(){
 		return height;
 	}

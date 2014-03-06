@@ -59,6 +59,17 @@ public:
 		int tempAlign =makeRand(-100,100);
 		return tile(tempHeight,tempWater,tempHeat,tempVeg,tempFauna,tempAlign);
 	}
+	tile driftTile(int heightDrift,int waterDrift,int heatDrift,int vegDrift,int faunaDrift,int alignDrift){
+		int tempHeight=makeRand(-heightDrift,heightDrift);
+		int tempWater=makeRand(-waterDrift,waterDrift/2);
+		int tempHeat=makeRand(-heatDrift,heatDrift);
+		int tempVeg=makeRand(-vegDrift,vegDrift);
+		int tempFauna=makeRand(-faunaDrift,faunaDrift);
+		int tempAlign=makeRand(-alignDrift,alignDrift);
+		return tile(tempHeight,tempWater,tempHeat,tempVeg,tempFauna,tempAlign);
+
+	}
+
 	bool boundsCheck(int desX,int desY){
 		if ((desX<0) || (desX>sizeX-1)){
 			return false;
@@ -99,12 +110,6 @@ public:
 		// tile right=map[x+1][y];
 	}
     void topLeftCornerGen(){
-    	int heightDrift=10;
-    	int waterDrift=5;
-    	int heatDrift=5;
-    	int vegDrift=5;
-    	int faunaDrift=5;
-    	int alignDrift=5;
 		for (index y=0; y<sizeY; ++y){
 			for (index x=0; x<sizeX; ++x){
 				map[x][y]=tile(-101,0,0,0,0,0);
@@ -116,7 +121,12 @@ public:
 				if ((x==0) && (y==0)){
 					map[x][y]=randomTile();
 				}else{
-					map[x][y]=averageTile(x,y);
+					// tile drift=driftTile(10,5,5,5,5,5);
+					tile drift=driftTile(40,20,20,20,20,50);
+					tile avg=averageTile(x,y);
+					avg.add(drift);
+					avg.check();
+					map[x][y]=avg;
 				}
 			}
 		}

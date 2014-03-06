@@ -3,7 +3,7 @@
 
 
 int main(){
-	static const int size=10;
+	static const int size=13;
 
 	terrainGenerator* testGenerator= new terrainGenerator(size,size);
 	testGenerator->topLeftCornerGen();
