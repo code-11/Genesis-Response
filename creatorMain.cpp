@@ -6,7 +6,7 @@ int main(){
 	static const int size=10;
 
 	terrainGenerator* testGenerator= new terrainGenerator(size,size);
-	testGenerator->cornerGen();
+	testGenerator->topLeftCornerGen();
 	testGenerator->exportMap("testFileIO.txt");
 	delete testGenerator;
 	return 1;

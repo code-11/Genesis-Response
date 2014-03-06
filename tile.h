@@ -25,6 +25,22 @@ public:
 		fauna=Fauna;
 		alignment=Alignment;
 	}
+	void divide(int scale){
+		height/=scale;
+		water/=scale;
+		heat/=scale;
+		vegetation/=scale;
+		fauna/=scale;
+		alignment/=scale;
+	}
+	void add(tile that){
+		height+=that.getHeight();
+		water+=that.getWater();
+		heat+=that.getHeat();
+		vegetation+=that.getVeg();
+		fauna+=that.getFauna();
+		alignment+=that.getAlign();
+	}
 	int getHeight(){
 		return height;
 	}

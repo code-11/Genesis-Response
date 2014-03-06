@@ -1,8 +1,8 @@
 #include "colorHelper.h"
 #include "tile.h"
 /* Window resolution */
-#define WINDOW_WIDTH 500
-#define WINDOW_HEIGHT 500
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 
 /* Window title */
 #define WINDOW_TITLE "SDL2 Test"
