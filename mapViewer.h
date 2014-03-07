@@ -1,4 +1,4 @@
-/*g++ mapViewer.cpp  -lSDL2*/
+/*g++ mapViewer.cpp -o viewer  -lSDL2*/
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 #include <iostream>
@@ -8,8 +8,6 @@
 #include <boost/algorithm/string.hpp>
 #include <cmath>
 #include "drawHelper.h"
-
-
 
 /* The window */
 typedef boost::multi_array<tile,2> matrix;

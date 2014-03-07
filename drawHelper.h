@@ -1,7 +1,7 @@
 #include "colorHelper.h"
 #include "tile.h"
 /* Window resolution */
-#define WINDOW_WIDTH 800
+#define WINDOW_WIDTH 1500
 #define WINDOW_HEIGHT 800
 
 /* Window title */

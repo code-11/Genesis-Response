@@ -6,6 +6,7 @@
 #include <string>
 #include "tile.h"
 #include <ctime>
+#include "rect.h"
 
 typedef boost::multi_array<tile,2> matrix;
 typedef matrix::index index;
@@ -103,12 +104,49 @@ public:
 			many+=1;
 			// std::cout<<"including down\n";
 		}
-		average.divide(many);
+		if (many!=0){
+			average.divide(many);
+		}else{
+			average=randomTile();
+		}
 		// std::cout<<"averaging "<<many<<" at"<<x<<","<<y<<"\n" ;
 		return average;
 
 
 		// tile right=map[x+1][y];
+	}
+	//Takes an outer rectange and an inner rectangle 
+	//and average fills all tiles in the outer but not the inner
+	void aveFillWithin(rect inner,rect outer){
+		for (int i=outer.getSmallX();i<=outer.getBigX();i+=1){
+			for (int j=outer.getSmallY();j<=outer.getBigY();j+=1){
+				if (!inner.contains(i,j)){
+					map[i][j]=averageTile(i,j);
+				}
+			}
+		}
+	}
+	rect expandByOne(rect given){
+		return rect(given.getSmallX()-1,given.getSmallY()-1,given.getBigX()+1,given.getBigY()+1);
+	}
+	void pointGen(int x, int y){
+		rect world=rect(0,0,sizeX,sizeY);
+		for (index y=0; y<sizeY; ++y){
+			for (index x=0; x<sizeX; ++x){
+				map[x][y]=tile(-101,0,0,0,0,0);
+			}
+		}
+		rect inner;
+		rect outer;
+		if (world.contains(x,y)){
+			outer=rect(x,y,x,y);
+			inner=rect(-1,-1,-1,-1);
+			aveFillWithin(inner,outer);
+			inner=outer;
+			outer=expandByOne(outer);
+			aveFillWithin(inner,outer);
+
+		}
 	}
     void topLeftCornerGen(){
 		for (index y=0; y<sizeY; ++y){
@@ -132,6 +170,21 @@ public:
 			}
 		}
 
+	}
+	void randomGen(){
+		for (index y=0; y<sizeY; ++y){
+			for (index x=0; x<sizeX; ++x){
+				map[x][y]=randomTile();
+			}
+		}
+	}
+	void boringGen(){
+		tile allTile=randomTile();
+		for (index y=0; y<sizeY; ++y){
+			for (index x=0; x<sizeX; ++x){
+				map[x][y]=allTile;
+			}
+		}
 	}
 	void exportMap(const std::string filePath){
 		std::ofstream outFile (filePath, std::ios::out);
