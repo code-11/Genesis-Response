@@ -24,6 +24,7 @@ public:
 		gen.seed(static_cast<unsigned int>(tiempo));
 		sizeX=newSizeX;
 		sizeY=newSizeY;
+		//map = matrix(boost::extents[newSizeX][newSizeY]);
 		map.resize(boost::extents[newSizeX][newSizeY]); 
 	}
 	int makeRand(int a,int b){
@@ -136,8 +137,8 @@ public:
 		std::ofstream outFile (filePath, std::ios::out);
 		outFile<<"XDimension,"<<sizeX<<",YDimension,"<<sizeY<<"\n";
 		outFile<<"x,y,height,water,heat,vegetation,fauna,alignment\n";
-		for (index y=0; y<sizeY;++y){
-			for (index x=0; x<sizeY; ++x){
+		for (index x=0; x<sizeX;x+=1){
+			for (index y=0; y<sizeY; y+=1){
 				tile temp= map[x][y];
 				outFile<<x<<","<<y<<","<<temp.getHeight()<<","<<temp.getWater()<<","<<temp.getHeat()<<","<<temp.getVeg()<<","<<temp.getFauna()<<","<<temp.getAlign()<<"\n";
 			}
