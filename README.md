@@ -5,8 +5,8 @@ A 2d tile based terrain generator (actually several) that utilizes an averaged m
 
 The executables can be made using the following commands:
 
-g++ creatorMain.cpp -o creator -std=c++11
-g++ viewerMain.cpp -o viewer -lSDL2
+	g++ creatorMain.cpp -o creator -std=c++11
+	g++ viewerMain.cpp -o viewer -lSDL2
 
 Note that SDL2 needs to be installed to compile.
 
