@@ -1,26 +1,10 @@
 class rect{
 private:
-	int x1;
-	int x2;
-	int y1;
-	int y2;
 	int bigX;
 	int smallX;
 	int bigY;
 	int smallY;
 public:	
-	int getX1(){
-		return x1;
-	}
-	int getY1(){
-		return y1;
-	}
-	int getY2(){
-		return y2;
-	}
-	int getX2(){
-		return x2;
-	}
 	int getBigX(){
 		return bigX;
 	}
@@ -34,10 +18,6 @@ public:
 		return smallY;
 	}
 	rect(){
-		int x1=0;
-		int x2=0;
-		int y1=0;
-		int y2=0;
 		int bigX=0;
 		int smallX=0;
 		int bigY=0;
@@ -58,17 +38,38 @@ public:
 			smallY=Y1;
 			bigY=Y2;
 		}
-		x1=X1;
-		y1=Y1;
-		x2=X2;
-		y2=Y2;
 	}
+	bool equals(rect other){
+		bool a=(smallX==other.getSmallX());
+		bool b=(smallY==other.getSmallY());
+		bool c=(bigX==other.getBigX());
+		bool d=(bigY==other.getBigY());
+		return ((a && b) && (c && d));
+	}
+
 	bool contains(int x, int y){
 		return (((x<=bigX) && (x>=smallX)) && ((y<=bigY) && (y>=smallY)));
 	}
 
 	//Figures out if any part of the rectangle is outside any part of another
-	bool outOfBounds(rect bounds){
-		return (bounds.contains(x1,y1) && bounds.contains(x2,y2));
+	bool inBounds(rect bounds){
+		return (bounds.contains(smallX,smallY) && bounds.contains(bigX,bigY));
+	}
+	void confine(rect bounds){
+		if (bigX>bounds.getBigX()){
+			bigX=bounds.getBigX();
+		} 
+		if (bigY>bounds.getBigY()){
+			bigY=bounds.getBigY();
+		} 
+		if (smallX<bounds.getSmallX()){
+			smallX=bounds.getSmallX();		
+		} 
+		if (smallY<bounds.getSmallY()){
+			smallY=bounds.getSmallY();
+		}
+	}
+	void print(){
+		std::cout<<"SmallX "<<smallX<<", SmallY"<<smallY<<", BigX"<<bigX<<", BigY"<<bigY;
 	}
 };

@@ -87,41 +87,59 @@ public:
 		if (boundsCheck(x-1,y)==true){
 			average.add(map[x-1][y]);
 			many+=1;
-			// std::cout<<"including left\n";
 		}
 		if (boundsCheck(x+1,y)==true){
 			average.add(map[x+1][y]);
 			many+=1;
-			// std::cout<<"including right\n";
 		}
 		if (boundsCheck(x,y-1)==true){
 			average.add(map[x][y-1]);
 			many+=1;
-			// std::cout<<"including up\n";
 		}
 		if (boundsCheck(x,y+1)==true){
 			average.add(map[x][y+1]);
 			many+=1;
-			// std::cout<<"including down\n";
+		}
+		if (many!=0){
+			average.divide(many);
+			return average;
+		}else{
+			if (boundsCheck(x-1,y-1)==true){
+				average.add(map[x-1][y-1]);
+				many+=1;
+				}
+			if (boundsCheck(x+1,y+1)==true){
+				average.add(map[x+1][y+1]);
+				many+=1;
+			}
+			if (boundsCheck(x+1,y-1)==true){
+				average.add(map[x+1][y-1]);
+				many+=1;
+			}
+			if (boundsCheck(x-1,y+1)==true){
+				average.add(map[x-1][y+1]);
+				many+=1;
+			}
 		}
 		if (many!=0){
 			average.divide(many);
 		}else{
 			average=randomTile();
 		}
-		// std::cout<<"averaging "<<many<<" at"<<x<<","<<y<<"\n" ;
 		return average;
-
-
-		// tile right=map[x+1][y];
 	}
+	
 	//Takes an outer rectange and an inner rectangle 
 	//and average fills all tiles in the outer but not the inner
 	void aveFillWithin(rect inner,rect outer){
 		for (int i=outer.getSmallX();i<=outer.getBigX();i+=1){
 			for (int j=outer.getSmallY();j<=outer.getBigY();j+=1){
 				if (!inner.contains(i,j)){
-					map[i][j]=averageTile(i,j);
+					tile drift=driftTile(40,20,20,20,20,50);
+					tile avg=averageTile(i,j);
+					avg.add(drift);
+					avg.check();
+					map[i][j]=avg;
 				}
 			}
 		}
@@ -130,9 +148,9 @@ public:
 		return rect(given.getSmallX()-1,given.getSmallY()-1,given.getBigX()+1,given.getBigY()+1);
 	}
 	void pointGen(int x, int y){
-		rect world=rect(0,0,sizeX,sizeY);
-		for (index y=0; y<sizeY; ++y){
-			for (index x=0; x<sizeX; ++x){
+		rect world=rect(0,0,sizeX-1,sizeY-1);
+		for (index y=0; y<sizeY; y+=1){
+			for (index x=0; x<sizeX; x+=1){
 				map[x][y]=tile(-101,0,0,0,0,0);
 			}
 		}
@@ -141,11 +159,13 @@ public:
 		if (world.contains(x,y)){
 			outer=rect(x,y,x,y);
 			inner=rect(-1,-1,-1,-1);
+			while (!outer.equals(world)){
+				aveFillWithin(inner,outer);
+				inner=outer;
+				outer=expandByOne(outer);
+				outer.confine(world);
+			}
 			aveFillWithin(inner,outer);
-			inner=outer;
-			outer=expandByOne(outer);
-			aveFillWithin(inner,outer);
-
 		}
 	}
     void topLeftCornerGen(){
