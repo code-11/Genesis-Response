@@ -125,7 +125,7 @@ public:
 			}
 			inFile.close();
 		}else{
-			std::cout<< "Unable to open file";
+			std::cout<< "Unable to open file\n";
 		}
 
 	}

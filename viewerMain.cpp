@@ -6,8 +6,16 @@
 int main( int argc, char* args[] )
 {
 	mapViewer* viewer=new mapViewer();
+	if (argc<2){
+		std::cout<<"Usage error. Needs 1 argument. Gave "<<argc-1<<"\n";
+		return 1;
+	}else{
 
-	viewer->importMap("testFileIO.txt");
-	viewer->runDisplay();
-	return 0;
+		std::string filePath =args[1];
+
+		viewer->importMap(filePath);
+
+		viewer->runDisplay();
+		return 0;
+	}
 }
